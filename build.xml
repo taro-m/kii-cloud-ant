@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<project default="test">
+
+  <!-- Configurations for the app on Kii Cloud -->
+  <property name="site" value="JP" />
+  <property name="app.id" value="192e25de" />
+  <property name="app.key" value="ddd054cb68ed31b9c828b38108deb646" />
+
+  <!-- Configuration for test user -->
+  <property name="username" value="user12345" />
+  <property name="password" value="pass67890" />
+
+  <scriptdef name="kii-cloud" language="javascript" src="kii-cloud-ant.js">
+    <attribute name="cmd"/>
+    <element name="site" type="string" />
+    <element name="app_id" type="string" />
+    <element name="app_key" type="string" />
+    <element name="username" type="string" />
+    <element name="password" type="string" />
+  </scriptdef>
+
+  <target name="register-user">
+    <kii-cloud cmd="registerUser">
+      <site>${site}</site>
+      <app_id>${app.id}</app_id>
+      <app_key>${app.key}</app_key>
+      <username>${username}</username>
+      <password>${password}</password>
+    </kii-cloud>
+  </target>
+
+  <target name="unregister-user">
+    <kii-cloud cmd="unregisterUser">
+      <site>${site}</site>
+      <app_id>${app.id}</app_id>
+      <app_key>${app.key}</app_key>
+      <username>${username}</username>
+      <password>${password}</password>
+    </kii-cloud>
+  </target>
+
+  <target name="login-user">
+    <kii-cloud cmd="loginUser">
+      <site>${site}</site>
+      <app_id>${app.id}</app_id>
+      <app_key>${app.key}</app_key>
+      <username>${username}</username>
+      <password>${password}</password>
+    </kii-cloud>
+  </target>
+
+  <target name="test">
+    <kii-cloud cmd="test">
+      <site>${site}</site>
+      <app_id>${app.id}</app_id>
+      <app_key>${app.key}</app_key>
+      <username>${username}</username>
+      <password>${password}</password>
+    </kii-cloud>
+  </target>
+
+</project>

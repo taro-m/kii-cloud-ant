@@ -1,0 +1,31 @@
+# ant sample codes to invoke Kii Cloud' REST API
+
+Sample to access to Kii Cloud by just apache ant scripts.
+Currently support below operations only:
+
+*   Creating a user
+*   Login as a user (existence check)
+*   Delete a user
+
+## Hands on
+
+To create a user:
+
+    $ ant register-user
+
+To login to check a user existence:
+
+    $ ant login-user
+
+To delete a user:
+
+    $ ant unregister-user
+
+To using arbitrary name:
+
+    $ ant -Dusername={NAME} {ONE OF COMMANDS}
+
+Example to use arbitrary name (foobar):
+
+    $ ant -Dusername=foobar register-user
+    $ ant -Dusername=foobar unregister-user
