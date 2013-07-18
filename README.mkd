@@ -1,4 +1,4 @@
-# ant sample codes to invoke Kii Cloud' REST API
+# ant sample to invoke Kii Cloud's API
 
 Sample to access to Kii Cloud by just apache ant scripts.
 Currently support below operations only:
