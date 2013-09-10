@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <property file="kiicloud-app.properties" prefix="kiicloud.app" />
+
+  <!-- Constants -->
+  <property name="kiicloud.userfile" value="kiicloud-user.properties" />
+  <property name="kiicloud.registered" value="kiicloud-registered.properties" />
+
+  <scriptdef name="kiicloud-anttask" language="javascript" src="kiicloud-anttask.js">
+    <attribute name="cmd"/>
+    <element name="site" type="string" />
+    <element name="app_id" type="string" />
+    <element name="app_key" type="string" />
+    <element name="username" type="string" />
+    <element name="password" type="string" />
+  </scriptdef>
+
+  <target name="kiicloud-setup-user">
+    <antcall target="kiicloud-generate-userfile" />
+    <antcall target="kiicloud-register-user" />
+  </target>
+
+  <target name="kiicloud-teardown-user">
+    <antcall target="kiicloud-unregister-user" />
+    <delete file="${kiicloud.userfile}" />
+  </target>
+
+  <target name="kiicloud-generate-userfile">
+    <condition property="kiicloud.generate.userfile.flag">
+      <not><available file="${kiicloud.userfile}" /></not>
+    </condition>
+    <antcall target="-kiicloud-generate-userfile" />
+  </target>
+
+  <target name="-kiicloud-generate-userfile" if="kiicloud.generate.userfile.flag">
+    <!-- generate username -->
+    <script language="javascript">
+      importClass(java.util.UUID);
+      var id = UUID.randomUUID().toString();
+      project.setProperty('kiicloud.username', id);
+    </script>
+    <!-- record username and password into a file -->
+    <propertyfile file="${kiicloud.userfile}">
+      <entry key="username" value="${kiicloud.username}" />
+      <entry key="password" value="${kiicloud.app.default_password}" />
+    </propertyfile>
+    <echo>A user file generated: ${kiicloud.userfile}</echo>
+  </target>
+
+  <target name="kiicloud-register-user">
+    <condition property="kiicloud.register.user.flag">
+      <and>
+        <available file="${kiicloud.userfile}" />
+        <not><available file="${kiicloud.registered}" /></not>
+      </and>
+    </condition>
+    <antcall target="-kiicloud-register-user" />
+  </target>
+
+  <target name="-kiicloud-register-user" if="kiicloud.register.user.flag" >
+    <property file="${kiicloud.userfile}" prefix="kiicloud.userfile."/>
+    <kiicloud-anttask cmd="registerUser">
+      <site>${kiicloud.app.site}</site>
+      <app_id>${kiicloud.app.app_id}</app_id>
+      <app_key>${kiicloud.app.app_key}</app_key>
+      <username>${kiicloud.userfile.username}</username>
+      <password>${kiicloud.userfile.password}</password>
+    </kiicloud-anttask>
+    <copy file="${kiicloud.userfile}" tofile="${kiicloud.registered}" />
+  </target>
+
+  <target name="kiicloud-unregister-user">
+    <condition property="kiicloud.unregister.user.flag">
+      <available file="${kiicloud.registered}" />
+    </condition>
+    <antcall target="-kiicloud-unregister-user" />
+  </target>
+
+  <target name="-kiicloud-unregister-user" if="kiicloud.unregister.user.flag">
+    <property file="${kiicloud.registered}" prefix="kiicloud.registered" />
+    <kiicloud-anttask cmd="unregisterUser">
+      <site>${kiicloud.app.site}</site>
+      <app_id>${kiicloud.app.app_id}</app_id>
+      <app_key>${kiicloud.app.app_key}</app_key>
+      <username>${kiicloud.registered.username}</username>
+      <password>${kiicloud.registered.password}</password>
+    </kiicloud-anttask>
+    <delete file="${kiicloud.registered}" />
+  </target>
+
+</project>

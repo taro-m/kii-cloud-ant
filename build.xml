@@ -2,15 +2,15 @@
 <project default="test">
 
   <!-- Configurations for the app on Kii Cloud -->
-  <property name="site" value="JP" />
-  <property name="app.id" value="192e25de" />
-  <property name="app.key" value="ddd054cb68ed31b9c828b38108deb646" />
+  <property name="site" value="US" />
+  <property name="app.id" value="e71d782a" />
+  <property name="app.key" value="5d9e27a126ddd309be6349f8dff2b954" />
 
   <!-- Configuration for test user -->
   <property name="username" value="user12345" />
   <property name="password" value="pass67890" />
 
-  <scriptdef name="kii-cloud" language="javascript" src="kii-cloud-ant.js">
+  <scriptdef name="kii-cloud" language="javascript" src="kiicloud-anttask.js">
     <attribute name="cmd"/>
     <element name="site" type="string" />
     <element name="app_id" type="string" />

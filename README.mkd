@@ -7,6 +7,10 @@ Currently support below operations only:
 *   Login as a user (existence check)
 *   Delete a user
 
+And this project includes files for Android project.  It can setup and teardown
+a test user easily.  See [below section](#for-android-projects) for details.
+
+
 ## Hands on
 
 To create a user:
@@ -29,3 +33,50 @@ Example to use arbitrary name (foobar):
 
     $ ant -Dusername=foobar register-user
     $ ant -Dusername=foobar unregister-user
+
+## For Android projects
+
+1.  Copy these files into your project.
+
+    *   custom\_rules.xml
+    *   kiicloud-anttask.js
+    *   kiicloud-app.properties
+
+2.  Edit copy of kiicloud-app.properties for your application.
+
+    * site: Region of your appliaction.
+    * app\_id: App ID from Kii Cloud developer portal.
+    * app\_key: App Key from Kii Cloud developer portal.
+    * default\_password: Password for test user.
+
+3.  Create and register a test user.
+
+    ```
+    $ ant kiicloud-setup-user
+    ```
+
+    or
+
+    ```
+    $ ant -f custom_rules.xml kiicloud-setup-user
+    ```
+
+    Two files are generated when succeeded.
+    *   kiicloud-user.properties: contains a generated user info.
+    *   kiicloud-registered.properties: contains a registered user info.
+
+4.  (When a test user is not be needed) Unregister a test user.
+
+    ```
+    $ ant kiicloud-teardown-user
+    ```
+
+    or
+
+    ```
+    $ ant -f custom_rules.xml kiicloud-teardown-user
+    ```
+
+## License
+
+Apache Licnse Version 2.0 is applied.
