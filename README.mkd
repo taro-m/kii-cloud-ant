@@ -37,17 +37,15 @@ Example to use arbitrary name (foobar):
 ## For Android projects
 
 1.  Copy these files into your project.
-
     *   custom\_rules.xml
     *   kiicloud-anttask.js
     *   kiicloud-app.properties
 
 2.  Edit copy of kiicloud-app.properties for your application.
-
-    * site: Region of your appliaction.
-    * app\_id: App ID from Kii Cloud developer portal.
-    * app\_key: App Key from Kii Cloud developer portal.
-    * default\_password: Password for test user.
+    *   site: Region of your appliaction.
+    *   app\_id: App ID from Kii Cloud developer portal.
+    *   app\_key: App Key from Kii Cloud developer portal.
+    *   default\_password: Password for test user.
 
 3.  Create and register a test user.
 
